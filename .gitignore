@@ -1,2 +1,11 @@
+# Package directories
 node_modules
+
+# Serverless directories
+.serverless
+
+# Configuration
 .env
+
+# IDE
+.idea

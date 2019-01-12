@@ -1,0 +1,19 @@
+service: podbot
+
+provider:
+  name: aws
+  runtime: nodejs8.10
+
+functions:
+  podbot-podcast-command:
+    handler: src/podcast-command.handler
+    events:
+    - http:
+        path: podcast
+        method: post
+  podbot-oauth-verifier:
+    handler: src/oauth-verifier.handler
+    events:
+    - http:
+        path: oauth
+        method: get

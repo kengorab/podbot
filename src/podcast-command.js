@@ -1,34 +1,47 @@
 require('dotenv').config()
 require('isomorphic-fetch')
-const express = require('express')
-const { urlencoded } = require('body-parser')
 const dayjs = require('dayjs')
 const truncate = require('lodash.truncate')
 const { search } = require('./listennotes-api')
 
-const app = express()
-app.use(urlencoded())
+module.exports.handler = handle
 
-app.post('/', async (req, res) => {
-  const { text } = req.body
+async function handle(event) {
+  const [[_, text]] = event.body.split('&')
+    .map(pair => pair.split('='))
+    .filter(([k]) => k === 'text')
   const query = decodeURIComponent(text)
   const result = await search(query)
 
   if (!result) {
-    res.json({
-      response_type: 'in_channel',
-      text: `Couldn't find a podcast called "${query}" :shrug:`
-    })
-    return
+    return wrapResponse(getErrorMessage(query))
   }
 
+  return wrapResponse(getResponse(query, result))
+}
+
+function wrapResponse(body) {
+  return {
+    statusCode: 200,
+    body: JSON.stringify(body)
+  }
+}
+
+function getErrorMessage(query) {
+  return {
+    response_type: 'in_channel',
+    text: `Couldn't find a movie called "${query}" :shrug:`
+  }
+}
+
+function getResponse(query, result) {
   const description = truncate(result.description, {
     length: 250,
     separator: ''
   })
   const mostRecent = dayjs(result.latestPubDate).format('MMM D, YYYY')
   const genres = result.genres.join(', ')
-  const allResultsLink = `https://www.listennotes.com/search/?q=${text}&scope=podcast`
+  const allResultsLink = `https://www.listennotes.com/search/?q=${query}&scope=podcast`
 
   const lines = [
     `*${result.title}*`,
@@ -39,14 +52,9 @@ app.post('/', async (req, res) => {
     `Wasn't what you were looking for? See all results: ${allResultsLink}`
   ]
 
-  const body = {
+  return {
     response_type: 'in_channel',
     text: lines.join('\n'),
     attachments: [{ image_url: result.image || result.thumbnail }]
   }
-
-  res.json(body)
-})
-
-const port = process.env.NODE_PORT || 5050
-app.listen(port, () => console.log(`Listening on :${port}`))
+}
