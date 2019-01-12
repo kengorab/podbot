@@ -6,7 +6,7 @@ A Slack bot that displays podcast information from [ListenNotes](https://www.lis
 <a href="https://slack.com/oauth/authorize?client_id=387036727766.518849833845&scope=commands"><img alt="Add to Slack" height="40" width="139" src="https://platform.slack-edge.com/img/add_to_slack.png" srcset="https://platform.slack-edge.com/img/add_to_slack.png 1x, https://platform.slack-edge.com/img/add_to_slack@2x.png 2x" /></a>
 
 ## Screenshot
-After entering `/movie inception`:
+After entering `/podcast we're alive`:
 ![We're Alive](https://github.com/kengorab/podbot/blob/master/screenshots/were-alive-screenshot.png)
 
 ## Disclaimers
