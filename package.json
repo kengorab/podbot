@@ -16,10 +16,10 @@
     "serverless-prune-plugin": "^1.4.1"
   },
   "dependencies": {
-    "body-parser": "^1.19.0",
+    "body-parser": "^1.20.1",
     "dayjs": "^1.8.16",
     "dotenv": "^8.2.0",
-    "express": "^4.17.1",
+    "express": "^4.18.2",
     "isomorphic-fetch": "^2.2.1",
     "lodash.truncate": "^4.4.2"
   }
