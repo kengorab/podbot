@@ -12,7 +12,7 @@
   "license": "ISC",
   "devDependencies": {
     "nodemon": "^1.19.4",
-    "serverless": "^1.54.0",
+    "serverless": "^3.25.1",
     "serverless-prune-plugin": "^1.4.1"
   },
   "dependencies": {
